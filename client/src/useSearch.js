@@ -35,7 +35,5 @@ export function useSearch() {
     setSearchTerm,
     searchResults,
     handleSearch,
-    allowExplicit,
-    setAllowExplicit,
   };
 }

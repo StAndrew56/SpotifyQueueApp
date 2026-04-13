@@ -3,7 +3,6 @@ import API_URL from "./config";
 
 export function useSpotifyPlayer(songsRef, setCurrentIndex, setSongs) {
   const [token, setToken] = useState("");
-  const [deviceId, setDeviceId] = useState(null);
   const deviceIdRef = useRef(null);
 
   useEffect(() => {
@@ -31,7 +30,6 @@ export function useSpotifyPlayer(songsRef, setCurrentIndex, setSongs) {
 
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device ID", device_id);
-        setDeviceId(device_id);
         deviceIdRef.current = device_id;
         if (songsRef.current.length > 0) {
           playSong(songsRef.current[0]?.uri);
@@ -78,6 +76,7 @@ export function useSpotifyPlayer(songsRef, setCurrentIndex, setSongs) {
 
     // Cleanup if component unmounts
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const playSong = async (spotifyUri) => {
@@ -105,7 +104,6 @@ export function useSpotifyPlayer(songsRef, setCurrentIndex, setSongs) {
   };
 
   return {
-    token,
     playSong,
   };
 }

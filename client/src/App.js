@@ -4,14 +4,8 @@ import { useSpotifyPlayer } from "./useSpotifyPlayer";
 import ConfirmModal from "./ConfirmModal";
 
 function App() {
-  const {
-    searchTerm,
-    setSearchTerm,
-    searchResults,
-    handleSearch,
-    allowExplicit,
-    setAllowExplicit,
-  } = useSearch();
+  const { searchTerm, setSearchTerm, searchResults, handleSearch } =
+    useSearch();
 
   const {
     currentIndex,
@@ -27,11 +21,7 @@ function App() {
     addSongToQueue,
   } = useQueue();
 
-  const { playSong, token } = useSpotifyPlayer(
-    songsRef,
-    setCurrentIndex,
-    setSongs,
-  );
+  const { playSong } = useSpotifyPlayer(songsRef, setCurrentIndex, setSongs);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
