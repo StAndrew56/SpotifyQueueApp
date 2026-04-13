@@ -4,7 +4,7 @@ import API_URL from "./config";
 export function useSearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [allowExplicit, setAllowExplicit] = useState(true);
+  const allowExplicit = true;
 
   //Search Button Clicked Function
   const handleSearch = async () => {
