@@ -6,6 +6,14 @@ export function useSpotifyPlayer(songsRef, setCurrentIndex, setSongs) {
   const deviceIdRef = useRef(null);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get("access_token");
+    if (urlToken) {
+      setToken(urlToken);
+      window.history.replaceState({}, document.title, "/");
+      return;
+    }
+    // fallback to session
     const fetchToken = async () => {
       const res = await fetch(`${API_URL}/spotify/me`, {
         credentials: "include",
@@ -105,5 +113,6 @@ export function useSpotifyPlayer(songsRef, setCurrentIndex, setSongs) {
 
   return {
     playSong,
+    token,
   };
 }

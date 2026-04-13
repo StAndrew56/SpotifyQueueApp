@@ -41,7 +41,9 @@ router.get("/callback", async (req, res) => {
 
   const data = await response.json();
   req.session.spotifyToken = data.access_token;
-  res.redirect("https://spotify-queue-app-rho.vercel.app");
+  res.redirect(
+    `https://spotify-queue-app-rho.vercel.app?access_token=${data.access_token}`,
+  );
 });
 
 router.get("/me", (req, res) => {
