@@ -5,7 +5,7 @@ const router = express.Router();
 
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-const redirectUri = "http://127.0.0.1:3001/spotify/callback";
+const redirectUri = "https://spotifyqueueapp.onrender.com/spotify/callback";
 
 // Step 1: Redirect user to Spotify login
 router.get("/login", (req, res) => {
@@ -41,7 +41,7 @@ router.get("/callback", async (req, res) => {
 
   const data = await response.json();
   req.session.spotifyToken = data.access_token;
-  res.redirect("http://127.0.0.1:3000");
+  res.redirect("https://spotify-queue-app-rho.vercel.app");
 });
 
 router.get("/me", (req, res) => {
