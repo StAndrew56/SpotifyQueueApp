@@ -1,43 +1,46 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const connectDB = require("./db");
 
 const app = express();
 const port = 3001;
-const spotifyAuth = require('./spotifyAuth');
-const spotifySearch = require('./spotifySearch');
 
+const spotifyAuth = require("./spotifyAuth");
+const spotifySearch = require("./spotifySearch");
+const spotifyAuthCode = require("./spotifyAuthCode");
+const queue = require("./queue");
 
+// Middleware first, always before routes
+connectDB();
+app.use(cookieParser());
+app.use(
+  session({
+    secret: "mixify-secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  }),
+);
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
+    credentials: true,
+  }),
+);
+app.use(express.json());
 
-app.use(cors());          // allow requests from frontend
-app.use(express.json());  // parse JSON bodies
-app.use('/spotify', spotifyAuth);
-app.use('/spotify', spotifySearch);
+// Routes
+app.use("/spotify", spotifyAuth);
+app.use("/spotify", spotifySearch);
+app.use("/spotify", spotifyAuthCode);
+app.use("/", queue);
 
-
-
-let songs = [
-  { id: 1, title: 'Song A', artist: 'Artist X' },
-  { id: 2, title: 'Song B', artist: 'Artist Y' }
-];
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
-});
-
-
-
-app.get('/songs', (req, res) => {
-  res.json(songs);
-});
-
-app.post('/songs', (req, res) => {
-  const { title, artist } = req.body;
-  const newSong = { id: songs.length + 1, title, artist };
-  songs.push(newSong);
-  res.status(201).json(newSong);
 });
