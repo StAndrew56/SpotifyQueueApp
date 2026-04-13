@@ -21,7 +21,24 @@ function App() {
     addSongToQueue,
   } = useQueue();
 
-  const { playSong } = useSpotifyPlayer(songsRef, setCurrentIndex, setSongs);
+  const { playSong, token } = useSpotifyPlayer(
+    songsRef,
+    setCurrentIndex,
+    setSongs,
+  );
+
+  if (!token) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <a
+          href="https://spotifyqueueapp.onrender.com/spotify/login"
+          className="bg-green-500 text-black font-bold py-4 px-8 rounded-full text-xl"
+        >
+          Login with Spotify
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
