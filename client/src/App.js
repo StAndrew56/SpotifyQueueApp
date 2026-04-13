@@ -116,14 +116,6 @@ function App() {
         <main className="flex-1 bg-gray-700 p-8 flex flex-col gap-8">
           {/* Now Playing */}
           <h2 className="text-3xl font-bold">Now Playing</h2>
-          {songs.length > 0 && !isPlaying && (
-            <button
-              onClick={() => playSong(currentSong.uri)}
-              className="bg-green-500 text-black p-4 rounded-lg font-bold"
-            >
-              ▶ Click to Start Playing
-            </button>
-          )}
           {currentSong ? (
             <div className="flex items-center gap-4 bg-gray-600 p-6 rounded-xl">
               <img
