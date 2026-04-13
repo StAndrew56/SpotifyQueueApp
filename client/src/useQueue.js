@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import API_URL from "./config";
 
 export function useQueue() {
   const [songs, setSongs] = useState([]);
@@ -14,7 +15,7 @@ export function useQueue() {
 
   useEffect(() => {
     const fetchSongs = async () => {
-      const res = await fetch("http://localhost:3001/queue");
+      const res = await fetch(`${API_URL}/queue`);
       const data = await res.json();
       setSongs(data);
     };
@@ -22,7 +23,7 @@ export function useQueue() {
   }, []);
 
   const addSongToQueue = async (song) => {
-    const res = await fetch("http://localhost:3001/queue", {
+    const res = await fetch(`${API_URL}/queue`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(song),

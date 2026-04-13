@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import API_URL from "./config";
 
 export function useSpotifyPlayer(songsRef, setCurrentIndex, setSongs) {
   const [token, setToken] = useState("");
@@ -7,7 +8,7 @@ export function useSpotifyPlayer(songsRef, setCurrentIndex, setSongs) {
 
   useEffect(() => {
     const fetchToken = async () => {
-      const res = await fetch("http://127.0.0.1:3001/spotify/me", {
+      const res = await fetch(`${API_URL}/spotify/me`, {
         credentials: "include",
       });
       const data = await res.json();
@@ -45,7 +46,7 @@ export function useSpotifyPlayer(songsRef, setCurrentIndex, setSongs) {
         const firstSong = songsRef.current[0];
         if (!firstSong) return;
 
-        await fetch(`http://localhost:3001/queue/${firstSong._id}`, {
+        await fetch(`${API_URL}/queue/${firstSong._id}`, {
           method: "DELETE",
         });
       };

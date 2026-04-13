@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API_URL from "./config";
 
 export function useSearch() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,12 +10,12 @@ export function useSearch() {
   const handleSearch = async () => {
     try {
       // Get Spotify token
-      const tokenRes = await fetch("http://localhost:3001/spotify/token");
+      const tokenRes = await fetch(`${API_URL}/spotify/token`);
       const { access_token } = await tokenRes.json();
 
       // Search explicit tracks
       const res = await fetch(
-        `http://localhost:3001/spotify/search?q=${encodeURIComponent(searchTerm)}&explicit=${allowExplicit}`,
+        `${API_URL}/spotify/search?q=${encodeURIComponent(searchTerm)}&explicit=${allowExplicit}`,
         {
           headers: {
             Authorization: `Bearer ${access_token}`,
